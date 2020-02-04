@@ -64,7 +64,9 @@ def _calculate_preference(parsed_version):
 
 
 class SwiftInputProvider(AbstractProvider):
-    def __init__(self, filename):
+    def __init__(self, filename, preference_strategy):
+        self.preference_strategy = preference_strategy
+
         with open(filename) as f:
             input_data = json.load(f)
 
@@ -82,7 +84,7 @@ class SwiftInputProvider(AbstractProvider):
         return dependency.container["identifier"]
 
     def get_preference(self, resolution, candidates, information):
-        return len(candidates)
+        return self.preference_strategy(resolution, candidates, information)
 
     def _iter_matches(self, requirement):
         container = requirement.container
@@ -124,8 +126,8 @@ class SwiftInputProvider(AbstractProvider):
     params=[os.path.join(INPUTS_DIR, n) for n in INPUT_NAMES],
     ids=[n[:-5] for n in INPUT_NAMES],
 )
-def provider(request):
-    return SwiftInputProvider(request.param)
+def provider(request, preference_strategy):
+    return SwiftInputProvider(request.param, preference_strategy)
 
 
 def test_resolver(provider, base_reporter):

@@ -81,7 +81,9 @@ def _iter_resolved(dependencies):
 
 
 class CocoaPodsInputProvider(AbstractProvider):
-    def __init__(self, filename):
+    def __init__(self, filename, preference_strategy):
+        self.preference_strategy = preference_strategy
+
         case_data = _safe_json_load(filename)
 
         index_name = os.path.join(
@@ -104,7 +106,7 @@ class CocoaPodsInputProvider(AbstractProvider):
         return dependency.name
 
     def get_preference(self, resolution, candidates, information):
-        return len(candidates)
+        return self.preference_strategy(resolution, candidates, information)
 
     def _iter_matches(self, requirement):
         try:
@@ -158,8 +160,8 @@ XFAIL_CASES = {
     ],
     ids=[n[:-5] for n in CASE_NAMES],
 )
-def provider(request):
-    return CocoaPodsInputProvider(request.param)
+def provider(request, preference_strategy):
+    return CocoaPodsInputProvider(request.param, preference_strategy)
 
 
 def _format_conflicts(exc):
