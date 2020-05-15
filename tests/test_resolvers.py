@@ -1,4 +1,5 @@
 import pytest
+import pdb
 
 from resolvelib import (
     AbstractProvider,
@@ -32,11 +33,13 @@ def test_candidate_inconsistent_error():
             assert c is candidate
             return False
 
+    # will do resolution right away
     resolver = Resolver(Provider(), BaseReporter())
 
     with pytest.raises(InconsistentCandidate) as ctx:
         resolver.resolve([requirement])
 
+    # pdb.set_trace()
     assert str(ctx.value) == "Provided candidate 'bar' does not satisfy 'foo'"
     assert ctx.value.candidate is candidate
     assert list(ctx.value.criterion.iter_requirement()) == [requirement]

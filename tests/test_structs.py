@@ -22,3 +22,19 @@ def test_simple(graph):
     graph.connect("a", "c")
     assert set(graph) == {"a", "b", "c"}
     assert set(graph.iter_edges()) == {("a", "b"), ("a", "c"), ("b", "c")}
+
+    """
+    a -> b -> c  d
+    |         ^
+    +------------+
+    """
+    graph.add("d")
+    assert graph.connected("b", "c") is True
+    assert graph.connected("b", "d") is False
+
+    with pytest.raises(ValueError) as ctx:
+        graph.add("d")
+    assert str(ctx.value) == "vertex exists"
+
+    assert set(graph.iter_children("a")) == {"b", "c"}
+    assert set(graph.iter_parents("b")) == {"a"}

@@ -156,10 +156,12 @@ class Resolution(object):
         self._r = reporter
         self._states = []
 
+    # read-only state
     @property
     def state(self):
         try:
             return self._states[-1]
+            # last _states[]
         except IndexError:
             raise AttributeError("state")
 
