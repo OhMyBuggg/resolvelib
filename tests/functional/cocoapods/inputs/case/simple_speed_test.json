@@ -1,0 +1,29 @@
+{
+  "name": "speed test for pip and pubgrub",
+  "index": "simple_speed_test",
+  "requested": {
+    "menu": ">= 1.0.0",
+    "dropdown": "1.8.0",
+    "icons": "1.0.0"
+  },
+  "base": [],
+  "resolved": [
+    {
+      "name": "icons",
+      "version": "1.0.0",
+      "dependencies": []
+    },
+    {
+      "name": "menu",
+      "version": "1.0.0",
+      "dependencies": [
+        {
+          "name": "dropdown",
+          "version": "1.8.0",
+          "dependencies": []
+        }
+      ]
+    }
+  ],
+  "conflicts": []
+}
