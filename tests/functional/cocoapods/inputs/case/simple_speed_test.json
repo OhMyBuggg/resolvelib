@@ -3,7 +3,6 @@
   "index": "simple_speed_test",
   "requested": {
     "menu": ">= 1.0.0",
-    "dropdown": "1.8.0",
     "icons": "1.0.0"
   },
   "base": [],

@@ -39,6 +39,7 @@
       "name": "menu",
       "version": "1.0.0",
       "dependencies": {
+        "dropdown": "1.8.0"
       }
     }
   ],
